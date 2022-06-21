@@ -1,18 +1,14 @@
 #include "Feeling.h"
 
-
-void Feeling::interactuar(){
-	list <string> options;
-	int i = 1;
-	options.push_front("A- ALIMENTAR");
-	options.push_front("S- PEGAR");
-	options.push_front("D- DUCHAR");
-	options.push_front("F- EJERCITAR");
-		for (auto obj : options) {
-			cout << obj << endl;
-			i++;
-		}
-		cout << "Ingrese la opcion que desea realizar: ";
+void Feeling::options() {
+    list <string> options;
+    options.push_back("presione A para ALIMENTAR");
+    options.push_back("presione S para PEGAR");
+    options.push_back("presione D para DUCHAR");
+    options.push_back("presione F para EJERCITAR");
+    for (auto obj : options) {
+        cout << obj << endl;
+    }
 }
 
 void Feeling::tamagotchi() {
@@ -23,24 +19,64 @@ void Feeling::tamagotchi() {
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed){ window.close(); }
-      
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-                thingTexture.loadFromFile("happy.png");
-                thing.setTexture(&thingTexture);
+            if (event.type == sf::Event::Closed) { window.close(); }
+
+            estadoA = happy;
+
+            //SI ESTA FELIZ
+            if (estadoA == happy) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+                    thingTexture.loadFromFile("sad.png");
+                    thing.setTexture(&thingTexture);
+                    cout << "Le pegaste, tu tamagotchi se encuentra triste" << endl;
+                    estadoA = sad;
+                }
+                //continue;
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-                thingTexture.loadFromFile("sad.png");
-                thing.setTexture(&thingTexture);
+            //SI ESTA TRISTE
+            if (estadoA == sad) {
+                if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::F))) {
+                    thingTexture.loadFromFile("happy.png");
+                    thing.setTexture(&thingTexture);
+                    cout << "Lo alimentaste, tu tamagotchi se encuentra feliz" << endl;
+                    estadoA = happy;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+                    thingTexture.loadFromFile("angry.png");
+                    thing.setTexture(&thingTexture);
+                    cout << "Le pegaste, tu tamagotchi se encuentra enojado" << endl;
+                    estadoA = angry;
+                }
+                //continue;
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                thingTexture.loadFromFile("angry.png");
-                thing.setTexture(&thingTexture);
+            //SI ESTA ENOJADO
+            if (estadoA = angry) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+                    thingTexture.loadFromFile("happy.png");
+                    thing.setTexture(&thingTexture);
+                    cout << "Lo alimentaste, tu tamagotchi se encuentra feliz" << endl;
+                    estadoA = happy;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+                    thingTexture.loadFromFile("dead.png");
+                    thing.setTexture(&thingTexture);
+                    cout << "Le pegaste, tu tamagotchi murio" << endl;
+                    estadoA = dead;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+                    thingTexture.loadFromFile("sad.png");
+                    thing.setTexture(&thingTexture);
+                    cout << "Lo bañaste, tu tamagotchi se encuentra triste" << endl;
+                    estadoA = sad;
+                }
+                //continue;
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
-                thingTexture.loadFromFile("dead.png");
-                thing.setTexture(&thingTexture);
-            }
+            //SI ESTA MUERTO
+                if (estadoA = estadoF) {
+                    exit;
+                }
+                //continue;
+
         }
         window.clear();
         window.draw(thing);
