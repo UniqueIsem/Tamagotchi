@@ -1,0 +1,45 @@
+#include <SFML/Graphics.hpp>
+#include <iostream>
+
+int main() {
+
+    sf::RenderWindow window(sf::VideoMode(800, 800), "Mi primera ventana ya no programo en consola berga");
+    sf::CircleShape shape(50.f);
+    shape.setFillColor(sf::Color::Blue);
+    float x = 0;
+    float y = 0;
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+                std::cout << "Esta presionando la tecla W" << std::endl;
+                y--;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+                std::cout << "Esta presionando la tecla A" << std::endl;
+                x--;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+                std::cout << "Esta presionando la tecla S" << std::endl;
+                y++;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+                std::cout << "Esta presionando la tecla S" << std::endl;
+                x++;
+            }
+        }
+
+
+        shape.setPosition(x, y);
+        window.clear();
+        window.draw(shape);
+        window.display();
+    }
+
+    return 0;
+}
